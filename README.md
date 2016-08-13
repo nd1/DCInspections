@@ -1,2 +1,2 @@
 # DCInspections
-code from 2 different projects to compile DC DOH violation information
+This repo contains code from two different projects that compiled data from DC DOH inspection reports. A project to combine the two and create code that will continue to pull the data on an ongoing basis will be pitched at Code for DC on 16 Aug 2016.
