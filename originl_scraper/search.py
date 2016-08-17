@@ -11,10 +11,10 @@ dPath = "/users/graham3333/desktop/DC_Rest/"
 hPath = "/users/graham3333/desktop/DC_Rest/Yelp/"
 
 # Required options
-consumer_key = "rL63BiMOzvpkVHIR62Mftg"
-consumer_secret = "qyqILC2U7b14mnWpzjZEUdbQkOk"
-token = "Ui-7VXos4bIZckrHWK2dfnLIz6-Rm3R5"
-token_secret = "O64Wzo0r_HaxWZ7lCvj_Mo4Gw74"
+consumer_key =
+consumer_secret =
+token =
+token_secret = 
 host = "api.yelp.com"
 bk = 0
 
@@ -25,7 +25,7 @@ def request(host, path, url_params, consumer_key, consumer_secret, token, token_
 	if url_params:
 		encoded_params = urllib.urlencode(url_params)
 	url = 'http://%s%s?%s' % (host, path, encoded_params)
-	
+
 	# Sign the URL
 	consumer = oauth2.Consumer(consumer_key, consumer_secret)
 	oauth_request = oauth2.Request('GET', url, {})
@@ -33,11 +33,11 @@ def request(host, path, url_params, consumer_key, consumer_secret, token, token_
 						'oauth_timestamp': oauth2.generate_timestamp(),
 						'oauth_token': token,
 						'oauth_consumer_key': consumer_key})
-	
+
 	token = oauth2.Token(token, token_secret)
 	oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
 	signed_url = oauth_request.to_url()
-	
+
 	# Connect
 	try:
 		conn = urllib2.urlopen(signed_url, None)
@@ -47,7 +47,7 @@ def request(host, path, url_params, consumer_key, consumer_secret, token, token_
 			conn.close()
 	except urllib2.HTTPError, error:
 		response = json.loads(error.read())
-	
+
 	return response
 
 
@@ -101,13 +101,13 @@ def checkAgain(c, rName, pID, response):
 		else:
 			c += 1
 			checkAgain(c, rName, pID, response)
-  
+
 f = open(dPath + 'restaurants_finalgeo.csv', 'rU')
 r = csv.reader(f)
 data = []
 for row in r:
 	data.append([row[0],row[1],row[2]])
-	
+
 fDone = open(hPath + 'permit_to_yelp_store.csv', 'rU')
 r2 = csv.reader(fDone)
 dDone = 0
@@ -125,7 +125,7 @@ for i in range(dDone):
 	w.writerow(dA[i])
 
 for i in range(dDone, len(data)):
-	
+
 	# Setup URL params from options
 	url_params = {}
 	url_params['term'] = data[i][1]
@@ -136,9 +136,9 @@ for i in range(dDone, len(data)):
 
 	response = request(host, '/v2/search', url_params, consumer_key, consumer_secret, token, token_secret)
 	#print json.dumps(response, sort_keys=True, indent=2)
-	
+
 	check = checkAgain(0, url_params['term'], data[i][0], response)
-	
+
 	if bk == 1:
 		break
 
