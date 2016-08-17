@@ -5,4 +5,5 @@ Current thought process:
 * look at the possibility of pullin all reports regardless of type? (do inspection ids increment by 1 reliabely?)
 * look at implementing scrapey?
 * rewrite, if possible, so pages aren't pulled down locally for parsing
+* look at original scripts to figure out what is counted as critical and non-critical
 *  ...
